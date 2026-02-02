@@ -38,10 +38,12 @@ jobs:
           GRADLE_ZIP="gradle-8.2-bin.zip"
           curl -sL -o "$GRADLE_ZIP" "https://services.gradle.org/distributions/$GRADLE_ZIP"
           unzip -q "$GRADLE_ZIP"
-          cp gradle-8.2/bin/gradlew .
-          cp gradle-8.2/bin/gradlew.bat .
+          GRADLE_DIR=$(find . -maxdepth 1 -type d -name 'gradle-*' | head -1)
+          GRADLE_DIR=${GRADLE_DIR#./}
+          cp "$GRADLE_DIR/bin/gradlew" .
+          cp "$GRADLE_DIR/bin/gradlew.bat" .
           mkdir -p gradle/wrapper
-          cp gradle-8.2/gradle/wrapper/gradle-wrapper.jar gradle/wrapper/
+          cp "$GRADLE_DIR/gradle/wrapper/gradle-wrapper.jar" gradle/wrapper/
           chmod +x gradlew
 
       - name: 构建 Debug APK
