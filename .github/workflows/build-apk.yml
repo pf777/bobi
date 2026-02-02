@@ -35,15 +35,9 @@ jobs:
 
       - name: 生成 Gradle Wrapper
         run: |
-          GRADLE_ZIP="gradle-8.2-bin.zip"
-          curl -sL -o "$GRADLE_ZIP" "https://services.gradle.org/distributions/$GRADLE_ZIP"
-          unzip -q "$GRADLE_ZIP"
-          GRADLE_DIR=$(find . -maxdepth 1 -type d -name 'gradle-*' | head -1)
-          GRADLE_DIR=${GRADLE_DIR#./}
-          cp "$GRADLE_DIR/bin/gradlew" .
-          cp "$GRADLE_DIR/bin/gradlew.bat" .
           mkdir -p gradle/wrapper
-          cp "$GRADLE_DIR/gradle/wrapper/gradle-wrapper.jar" gradle/wrapper/
+          curl -sL -o gradlew "https://raw.githubusercontent.com/gradle/gradle/v8.2.0/gradlew"
+          curl -sL -o gradle/wrapper/gradle-wrapper.jar "https://github.com/gradle/gradle/raw/v8.2.0/gradle/wrapper/gradle-wrapper.jar"
           chmod +x gradlew
 
       - name: 构建 Debug APK
